@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import NewsCard from "@/components/NewsCard";
 import CTASection from "@/components/CTASection";
@@ -6,15 +6,76 @@ import Footer from "@/components/Footer";
 import CategoryBadge from "@/components/CategoryBadge";
 import { TrendingUp, Eye, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { allNews } from "@/data/news";
+import { allNews as staticNews } from "@/data/news";
+import { supabase } from "@/integrations/supabase/client";
 
 const categories = ["Todas", "Política", "Economia", "Cultura", "Segurança", "Saúde", "Educação"];
 
-const featuredNews = allNews.slice(0, 2);
-const latestNews = allNews.slice(2);
+interface NewsItem {
+  id: string | number;
+  title: string;
+  excerpt: string;
+  category: string;
+  imageUrl: string;
+  date: string;
+  author?: string;
+}
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState("Todas");
+  const [allNews, setAllNews] = useState<NewsItem[]>([]);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      const { data: dbNews } = await supabase
+        .from("news")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      const formattedDbNews: NewsItem[] = (dbNews || []).map((n) => ({
+        id: n.id,
+        title: n.title,
+        excerpt: n.excerpt,
+        category: n.category,
+        imageUrl: n.image_url,
+        date: new Date(n.created_at).toLocaleDateString("pt-BR"),
+        author: n.author,
+      }));
+
+      const formattedStaticNews: NewsItem[] = staticNews.map((n) => ({
+        id: n.id,
+        title: n.title,
+        excerpt: n.excerpt,
+        category: n.category,
+        imageUrl: n.imageUrl,
+        date: n.date,
+        author: n.author,
+      }));
+
+      setAllNews([...formattedDbNews, ...formattedStaticNews]);
+    };
+
+    fetchNews();
+
+    // Subscribe to realtime updates
+    const channel = supabase
+      .channel("news-realtime")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "news" },
+        () => {
+          fetchNews();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const featuredNews = allNews.slice(0, 2);
+  const latestNews = allNews.slice(2);
 
   const filteredNews = activeCategory === "Todas"
     ? latestNews
@@ -37,7 +98,7 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {featuredNews.map((news, index) => (
               <div key={news.id} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                <NewsCard {...news} featured />
+                <NewsCard {...news} id={typeof news.id === "string" ? 0 : news.id} featured />
               </div>
             ))}
           </div>
@@ -69,7 +130,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredNews.map((news, index) => (
               <div key={news.id} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                <NewsCard {...news} />
+                <NewsCard {...news} id={typeof news.id === "string" ? 0 : news.id} />
               </div>
             ))}
           </div>

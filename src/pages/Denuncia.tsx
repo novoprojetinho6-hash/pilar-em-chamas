@@ -1,6 +1,7 @@
-import { Phone, Shield, AlertTriangle, Stethoscope, Dog, Users } from "lucide-react";
+import { Phone, Shield, AlertTriangle, Stethoscope, Dog, Users, MessageCircle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
 
 const emergencyContacts = [
   {
@@ -9,6 +10,8 @@ const emergencyContacts = [
     icon: AlertTriangle,
     description: "Faça sua denúncia de forma anônima e segura",
     highlight: true,
+    whatsapp: true,
+    whatsappMessage: "Olá, gostaria de fazer uma denúncia anônima.",
   },
   {
     title: "Polícia Militar",
@@ -16,6 +19,7 @@ const emergencyContacts = [
     icon: Shield,
     description: "Emergências policiais",
     highlight: false,
+    whatsapp: false,
   },
   {
     title: "GCM - Guarda Civil Municipal",
@@ -23,6 +27,8 @@ const emergencyContacts = [
     icon: Users,
     description: "Segurança municipal",
     highlight: false,
+    whatsapp: true,
+    whatsappMessage: "Olá, preciso de auxílio da Guarda Civil Municipal.",
   },
   {
     title: "SAMU",
@@ -30,6 +36,7 @@ const emergencyContacts = [
     icon: Stethoscope,
     description: "Serviço de Atendimento Móvel de Urgência",
     highlight: false,
+    whatsapp: false,
   },
   {
     title: "Polícia Civil",
@@ -37,6 +44,7 @@ const emergencyContacts = [
     icon: Shield,
     description: "Registro de ocorrências e investigações",
     highlight: false,
+    whatsapp: false,
   },
   {
     title: "Zoonoses",
@@ -44,6 +52,7 @@ const emergencyContacts = [
     icon: Dog,
     description: "Controle de zoonoses e animais",
     highlight: false,
+    whatsapp: false,
   },
   {
     title: "Disque Denúncia - Mulher",
@@ -51,10 +60,22 @@ const emergencyContacts = [
     icon: Phone,
     description: "Central de Atendimento à Mulher",
     highlight: false,
+    whatsapp: false,
   },
 ];
 
+const formatWhatsAppNumber = (number: string) => {
+  const cleaned = number.replace(/\D/g, "");
+  return cleaned.startsWith("55") ? cleaned : `55${cleaned}`;
+};
+
 const Denuncia = () => {
+  const openWhatsApp = (number: string, message: string) => {
+    const formattedNumber = formatWhatsAppNumber(number);
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${formattedNumber}?text=${encodedMessage}`, "_blank");
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -98,7 +119,19 @@ const Denuncia = () => {
                 >
                   {contact.number}
                 </a>
-                <p className="text-sm text-muted-foreground">{contact.description}</p>
+                <p className="text-sm text-muted-foreground mb-4">{contact.description}</p>
+                
+                {contact.whatsapp && (
+                  <Button
+                    variant="cta"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => openWhatsApp(contact.number, contact.whatsappMessage || "")}
+                  >
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    Enviar WhatsApp
+                  </Button>
+                )}
               </div>
             );
           })}
