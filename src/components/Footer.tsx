@@ -36,9 +36,9 @@ const Footer = () => {
           <div>
             <h3 className="font-display text-lg font-bold text-foreground mb-4">Categorias</h3>
             <ul className="space-y-2">
-              {["Política", "Economia", "Esportes", "Cultura", "Segurança", "Saúde"].map((cat) => (
+              {["Política", "Economia", "Cultura", "Segurança", "Saúde", "Denúncia"].map((cat) => (
                 <li key={cat}>
-                  <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <a href={cat === "Denúncia" ? "/denuncia" : "#"} className="text-sm text-muted-foreground hover:text-primary transition-colors">
                     {cat}
                   </a>
                 </li>

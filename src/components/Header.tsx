@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { Search, Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Search, Menu, X, Phone } from "lucide-react";
 import { Button } from "./ui/button";
 
 const categories = [
-  "Início",
-  "Política",
-  "Economia",
-  "Esportes",
-  "Cultura",
-  "Segurança",
-  "Saúde",
-  "Educação",
+  { name: "Início", path: "/" },
+  { name: "Política", path: "/#politica" },
+  { name: "Economia", path: "/#economia" },
+  { name: "Cultura", path: "/#cultura" },
+  { name: "Segurança", path: "/#seguranca" },
+  { name: "Saúde", path: "/#saude" },
+  { name: "Educação", path: "/#educacao" },
+  { name: "Denúncia", path: "/denuncia", highlight: true },
 ];
 
 const Header = () => {
@@ -84,13 +85,18 @@ const Header = () => {
           {/* Desktop nav */}
           <ul className="hidden md:flex items-center justify-center gap-1">
             {categories.map((category) => (
-              <li key={category}>
-                <a
-                  href="#"
-                  className="block px-4 py-3 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-primary/10 transition-colors uppercase tracking-wide"
+              <li key={category.name}>
+                <Link
+                  to={category.path}
+                  className={`block px-4 py-3 text-sm font-medium transition-colors uppercase tracking-wide ${
+                    category.highlight
+                      ? "text-accent hover:text-accent/80 hover:bg-accent/10 flex items-center gap-2"
+                      : "text-foreground/80 hover:text-primary hover:bg-primary/10"
+                  }`}
                 >
-                  {category}
-                </a>
+                  {category.highlight && <Phone className="h-4 w-4" />}
+                  {category.name}
+                </Link>
               </li>
             ))}
           </ul>
@@ -99,13 +105,19 @@ const Header = () => {
           {isMenuOpen && (
             <ul className="md:hidden py-2 animate-fade-in">
               {categories.map((category) => (
-                <li key={category}>
-                  <a
-                    href="#"
-                    className="block px-4 py-3 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-primary/10 transition-colors uppercase tracking-wide"
+                <li key={category.name}>
+                  <Link
+                    to={category.path}
+                    className={`block px-4 py-3 text-sm font-medium transition-colors uppercase tracking-wide ${
+                      category.highlight
+                        ? "text-accent hover:text-accent/80 hover:bg-accent/10 flex items-center gap-2"
+                        : "text-foreground/80 hover:text-primary hover:bg-primary/10"
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
                   >
-                    {category}
-                  </a>
+                    {category.highlight && <Phone className="h-4 w-4" />}
+                    {category.name}
+                  </Link>
                 </li>
               ))}
             </ul>
