@@ -5,12 +5,14 @@ import { Button } from "./ui/button";
 
 const categories = [
   { name: "Início", path: "/" },
-  { name: "Política", path: "/#politica" },
-  { name: "Economia", path: "/#economia" },
-  { name: "Cultura", path: "/#cultura" },
-  { name: "Segurança", path: "/#seguranca" },
-  { name: "Saúde", path: "/#saude" },
-  { name: "Educação", path: "/#educacao" },
+  { name: "Política", path: "/categoria/politica" },
+  { name: "Economia", path: "/categoria/economia" },
+  { name: "Cultura", path: "/categoria/cultura" },
+  { name: "Segurança", path: "/categoria/seguranca" },
+  { name: "Saúde", path: "/categoria/saude" },
+  { name: "Educação", path: "/categoria/educacao" },
+  { name: "Vereadores", path: "/vereadores" },
+  { name: "Parceiros", path: "/parceiros" },
   { name: "Denúncia", path: "/denuncia", highlight: true },
 ];
 
