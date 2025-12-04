@@ -6,78 +6,12 @@ import Footer from "@/components/Footer";
 import CategoryBadge from "@/components/CategoryBadge";
 import { TrendingUp, Eye, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { allNews } from "@/data/news";
 
-const categories = ["Todas", "Política", "Economia", "Esportes", "Cultura", "Segurança"];
+const categories = ["Todas", "Política", "Economia", "Cultura", "Segurança", "Saúde", "Educação"];
 
-const featuredNews = [
-  {
-    id: 1,
-    title: "Prefeitura anuncia novo investimento em infraestrutura para 2025",
-    excerpt: "Obras incluem pavimentação de ruas e melhorias no sistema de saneamento básico da cidade.",
-    category: "Política",
-    imageUrl: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&h=450&fit=crop",
-    date: "Há 2 horas",
-  },
-  {
-    id: 2,
-    title: "Festival cultural movimenta economia local no fim de semana",
-    excerpt: "Evento reuniu milhares de visitantes e impulsionou o comércio da região central.",
-    category: "Cultura",
-    imageUrl: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&h=450&fit=crop",
-    date: "Há 5 horas",
-  },
-];
-
-const latestNews = [
-  {
-    id: 3,
-    title: "Time local conquista título regional de futebol amador",
-    excerpt: "Vitória histórica coloca Pilar do Sul no mapa do esporte regional.",
-    category: "Esportes",
-    imageUrl: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=400&h=300&fit=crop",
-    date: "Há 1 hora",
-  },
-  {
-    id: 4,
-    title: "Nova unidade de saúde será inaugurada no próximo mês",
-    excerpt: "UBS vai atender moradores da zona rural com atendimento 24 horas.",
-    category: "Saúde",
-    imageUrl: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=300&fit=crop",
-    date: "Há 3 horas",
-  },
-  {
-    id: 5,
-    title: "Produtores rurais comemoram safra recorde de batata",
-    excerpt: "Clima favorável e técnicas modernas garantiram aumento de 30% na produção.",
-    category: "Economia",
-    imageUrl: "https://images.unsplash.com/photo-1518977676601-b53f82ber38a?w=400&h=300&fit=crop",
-    date: "Há 6 horas",
-  },
-  {
-    id: 6,
-    title: "Escola municipal conquista prêmio estadual de educação",
-    excerpt: "Projeto de alfabetização foi reconhecido como um dos melhores do estado.",
-    category: "Educação",
-    imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop",
-    date: "Há 8 horas",
-  },
-  {
-    id: 7,
-    title: "Operação policial apreende veículos roubados na região",
-    excerpt: "Ação integrada recuperou três carros que haviam sido furtados em cidades vizinhas.",
-    category: "Segurança",
-    imageUrl: "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=400&h=300&fit=crop",
-    date: "Há 10 horas",
-  },
-  {
-    id: 8,
-    title: "Câmara aprova projeto de lei para incentivo a pequenos empreendedores",
-    excerpt: "Medida reduz impostos e oferece linhas de crédito especiais para microempresas.",
-    category: "Política",
-    imageUrl: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop",
-    date: "Há 12 horas",
-  },
-];
+const featuredNews = allNews.slice(0, 2);
+const latestNews = allNews.slice(2);
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState("Todas");
