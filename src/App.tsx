@@ -8,6 +8,7 @@ import NewsDetail from "./pages/NewsDetail";
 import Denuncia from "./pages/Denuncia";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
+import Adm from "./pages/Adm";
 import Vereadores from "./pages/Vereadores";
 import Parceiros from "./pages/Parceiros";
 import Categoria from "./pages/Categoria";
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/denuncia" element={<Denuncia />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/adm" element={<Adm />} />
           <Route path="/vereadores" element={<Vereadores />} />
           <Route path="/parceiros" element={<Parceiros />} />
           <Route path="/categoria/:categoria" element={<Categoria />} />
