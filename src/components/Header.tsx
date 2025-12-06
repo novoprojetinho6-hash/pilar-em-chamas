@@ -81,6 +81,26 @@ const Header = () => {
         </p>
       </div>
 
+      {/* Advertisement Banner */}
+      <div className="container py-3 border-t border-border/50">
+        <a
+          href="https://wa.me/5515981678810?text=Olá! Gostaria de anunciar no Pilar Em Foco."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 hover:from-primary/30 hover:via-accent/30 hover:to-primary/30 border border-primary/30 rounded-lg p-4 text-center transition-all duration-300 group"
+        >
+          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
+            <span className="text-sm md:text-base font-display font-bold uppercase tracking-wide text-foreground">
+              📢 Espaço do Anunciante
+            </span>
+            <span className="text-xs md:text-sm text-muted-foreground">|</span>
+            <span className="text-sm md:text-base font-medium text-primary group-hover:text-primary/80 transition-colors">
+              Anuncie Aqui: (15) 98167-8810
+            </span>
+          </div>
+        </a>
+      </div>
+
       {/* Navigation */}
       <nav className="border-t border-border bg-secondary/50">
         <div className="container">
